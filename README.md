@@ -1,6 +1,6 @@
 # Cheat-Card-Game
 The goal of cheat is to get rid of all the cards in your hand before your opponent does. The rules of the game are as follows:
-#Rules
+# Rules
 1) A standard 52 set of cards are shuffled and the whole deck is distributed evenly to the players.
 2) A player discards the starting card, the ace of spades, and the cards are laid face down in the order of ace, two, three, ..., ten, jack, queen, king, then repeated back to ace
 3) Players are required to call out what card they are laying down. Players may lie about what cards are being laid down.
