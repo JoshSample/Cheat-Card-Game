@@ -1,5 +1,5 @@
 package cheatcardgame;
 
-public class StartGame {
+public class StartGamePanel {
 
 }
