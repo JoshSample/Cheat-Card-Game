@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="C:/Users/joshs/test/softwareFall2020/CheatCardGame/mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/joshs/test/softwareFall2020/CheatCardGame/ocsf.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="lib" path="C:/Users/joshs/git/repository/CheatCardGame/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/joshs/git/repository/CheatCardGame/ocsf.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
