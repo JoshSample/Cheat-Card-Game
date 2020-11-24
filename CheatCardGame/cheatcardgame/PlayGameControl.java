@@ -1,6 +1,8 @@
 package cheatcardgame;
 
 import java.awt.CardLayout;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -8,8 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import lab7out.LoginData;
-import lab7out.LoginPanel;
+import cheatcardgame.LoginData;
+import cheatcardgame.LoginPanel;
 
 
 public class PlayGameControl implements ActionListener {

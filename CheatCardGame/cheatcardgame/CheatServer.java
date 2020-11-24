@@ -15,7 +15,7 @@ public class CheatServer extends AbstractServer
   private JTextArea log;
   private JLabel status;
   private boolean running = false;
-  //private Database database;
+  private Database database;
 
   // Constructor for initializing the server with default settings.
   public CheatServer()
@@ -30,7 +30,7 @@ public class CheatServer extends AbstractServer
     return running;
   }
   
-  /* Commented out until we get the database set up
+
   //Setter for the database
   public void setDatabase(Database database) 
   {
@@ -38,7 +38,6 @@ public class CheatServer extends AbstractServer
 	  this.database = database;
 	  
   }
-  */
   
   // Setters for the data fields corresponding to the GUI elements.
   public void setLog(JTextArea log)
@@ -85,8 +84,63 @@ public class CheatServer extends AbstractServer
   // When a message is received from a client, handle it.
   public void handleMessageFromClient(Object arg0, ConnectionToClient arg1)
   {
-    
-	  //placeholder for a function to handle game moves and other requests from clients
+	 
+	  	//If we received LoginData, verify the account information.
+	    if (arg0 instanceof LoginData)
+	    {
+	    	
+		    // Check the username and password with the database.
+	    	boolean login = false;
+		    LoginData data = (LoginData)arg0;
+		    Object result = null;
+	
+			login = database.checkLogin(data.getUsername(), data.getPassword());
+			if (login == false) {
+				 result = new Error("The username and password are incorrect.", "Login");
+				 log.append("Client " + arg1.getId() + " failed to log in\n");
+			}
+	
+			else {
+				result = "LoginSuccessful";
+			    log.append("Client " + arg1.getId() + " successfully logged in as " + data.getUsername() + "\n");
+			}
+	    
+		    try {
+		      arg1.sendToClient(result);
+		    }
+		    catch (IOException e) {
+		      return;
+		    } 
+	  }
+	    
+	   //If we receive Create Account data, verify that the account does not exist
+	   else if (arg0 instanceof CreateAccountData) {
+	    	
+		   //Try to create the account.
+		   boolean createAccount = false;
+	       CreateAccountData data = (CreateAccountData)arg0;
+	       Object result = null;
+	       
+	       createAccount = database.createNewAccount(data.getUsername(), data.getPassword());
+	       if (createAccount = false) {
+	    	   result = new Error("The username is already in use.", "CreateAccount");
+	    	   log.append("Client " + arg1.getId() + " failed to create a new account\n");
+	       }
+	       else {
+	    	   result = "CreateAccountSuccessful";
+	    	   log.append("Client " + arg1.getId() + " created a new account called " + data.getUsername() + "\n");
+	       }
+	       
+	       try {
+	         arg1.sendToClient(result);
+	       }
+	       catch (IOException e) {
+	         return;
+	       }
+	    	
+	    }
+	    
+	   //else if (arg0 instanceof )
 	  
   }
 
