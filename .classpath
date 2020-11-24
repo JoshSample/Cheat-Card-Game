@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="CheatCardGame"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/justi/git/Cheat-Card-Game/CheatCardGame/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/justi/git/Cheat-Card-Game/CheatCardGame/ocsf.jar"/>
+	<classpathentry kind="lib" path="C:/Users/justi/git/Cheat-Card-Game/CheatCardGame/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/justi/git/Cheat-Card-Game/CheatCardGame/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
