@@ -1,4 +1,3 @@
-drop table contact;
 drop table users;
 
 create table users
