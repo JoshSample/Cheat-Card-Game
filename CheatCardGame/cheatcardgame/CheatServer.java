@@ -85,7 +85,7 @@ public class CheatServer extends AbstractServer
   public void handleMessageFromClient(Object arg0, ConnectionToClient arg1)
   {
 	 
-	  	//If we received LoginData, verify the account information.
+	  	//If we received LoginData, verify the account information
 	    if (arg0 instanceof LoginData)
 	    {
 	    	

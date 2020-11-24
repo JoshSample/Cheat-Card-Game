@@ -18,7 +18,7 @@ public class LoginControl implements ActionListener
     this.client = client;
   }
   
-  // Handle button clicks.
+  // Handle button clicks
   public void actionPerformed(ActionEvent ae)
   {
     // Get the name of the button clicked.
