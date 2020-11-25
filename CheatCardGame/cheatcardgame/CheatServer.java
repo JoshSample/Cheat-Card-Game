@@ -19,6 +19,9 @@ public class CheatServer extends AbstractServer
   private ConnectionToClient player1;
   private ConnectionToClient player2;
   private ArrayList<String> discardPile = new ArrayList<String>();
+  private Deck gameDeck;
+  private Deck player1Hand;
+  private Deck player2Hand;
   private String prevCard;
   private String[] cardOrder = {"A","2","3","4","5","6","7","8","9","J","Q","K"};
   private int iterator = 0;
@@ -151,8 +154,8 @@ public class CheatServer extends AbstractServer
 	       }
 	    	
 	    }
-	    
-	   //else if (arg0 instanceof )
+
+
 	   else if (arg0 instanceof PlayGameData) {
 		   if (((PlayGameData) arg0).getTurn() == false) {
 			   try {
