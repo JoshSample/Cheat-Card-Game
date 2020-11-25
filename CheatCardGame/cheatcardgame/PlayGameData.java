@@ -8,6 +8,7 @@ public class PlayGameData implements Serializable {
 	private int playerCount;
 	private int opponentCount;
 	private boolean turn;
+	private boolean cheat;
 	private String playedCard;
 	
 	public PlayGameData(Player player, Player opponent) {
@@ -21,6 +22,13 @@ public class PlayGameData implements Serializable {
 	
 	public boolean getTurn() {
 		return turn;
+	}
+	public void setCheat(boolean val) {
+		this.cheat = val;
+	}
+	
+	public boolean getCheat() {
+		return cheat;
 	}
 	
 	public void setPlayerCount(int count) {

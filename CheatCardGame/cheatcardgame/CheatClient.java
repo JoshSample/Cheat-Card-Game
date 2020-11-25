@@ -7,6 +7,7 @@ public class CheatClient extends AbstractClient
   // Private data fields for storing the GUI controllers.
   private LoginControl loginControl;
   private CreateAccountControl createAccountControl;
+  private PlayGameControl playGameControl;
 
   // Setters for the GUI controllers.
   public void setLoginControl(LoginControl loginControl)
@@ -17,6 +18,11 @@ public class CheatClient extends AbstractClient
   {
     this.createAccountControl = createAccountControl;
   }
+  public void setPlayGameControl(PlayGameControl playGameControl)
+  {
+	  this.playGameControl = playGameControl;
+  }
+
 
   // Constructor for initializing the client with default settings.
   public CheatClient()
@@ -63,6 +69,9 @@ public class CheatClient extends AbstractClient
       {
         createAccountControl.displayError(error.getMessage());
       }
+    }
+    else if(arg0 instanceof PlayGameData) {
+    	//iterate turn and place card
     }
   }  
 }

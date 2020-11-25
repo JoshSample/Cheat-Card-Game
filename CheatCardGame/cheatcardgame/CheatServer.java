@@ -16,6 +16,12 @@ public class CheatServer extends AbstractServer
   private JLabel status;
   private boolean running = false;
   private Database database;
+  private ConnectionToClient player1;
+  private ConnectionToClient player2;
+  private ArrayList<String> discardPile = new ArrayList<String>();
+  private String prevCard;
+  private String[] cardOrder = {"A","2","3","4","5","6","7","8","9","J","Q","K"};
+  private int iterator = 0;
 
   // Constructor for initializing the server with default settings.
   public CheatServer()
@@ -79,6 +85,12 @@ public class CheatServer extends AbstractServer
   public void clientConnected(ConnectionToClient client)
   {
     log.append("Client " + client.getId() + " connected\n");
+    if(player1 == null) {
+    	player1 = client;
+    }
+    else if (player2 == null){
+    	player2 = client;
+    }
   }
 
   // When a message is received from a client, handle it.
@@ -141,6 +153,75 @@ public class CheatServer extends AbstractServer
 	    }
 	    
 	   //else if (arg0 instanceof )
+	   else if (arg0 instanceof PlayGameData) {
+		   if (((PlayGameData) arg0).getTurn() == false) {
+			   try {
+			         arg1.sendToClient("invalid");
+			         //need two players for sending individual messages
+			       }
+			       catch (IOException e) {
+			         e.printStackTrace();
+			       }		   }
+		   else if (((PlayGameData) arg0).getCheat() == true) {
+			   if (prevCard.contains(cardOrder[iterator])) { // if previous card plays matches the correct card order
+				   try {
+				         arg1.sendToClient("Cheat False"); //cheat accusation was false
+				       }
+				       catch (IOException e) {
+				         e.printStackTrace();
+				       }
+				   if(arg1.equals(player1)) {
+					   try {
+					         player2.sendToClient("Cheater");
+					       }
+					       catch (IOException e) {
+					         e.printStackTrace();
+					       }
+					   }
+				   else {
+					   try {
+					         player1.sendToClient("Cheater");
+					       }
+					       catch (IOException e) {
+					         e.printStackTrace();
+					       }
+				   }
+				   }
+			   else {
+				   try {
+				         arg1.sendToClient("Cheat True");
+				       }
+				       catch (IOException e) {
+				         e.printStackTrace();
+				       }
+				   if(arg1.equals(player1)) {
+					   try {
+					         player1.sendToClient("Cheater");
+					       }
+					       catch (IOException e) {
+					         e.printStackTrace();
+					       }
+					   }
+				   else {
+					   try {
+					         player2.sendToClient("Cheater");
+					       }
+					       catch (IOException e) {
+					         e.printStackTrace();
+					       }
+				   }
+			   }
+		   }
+		   else {
+			   try {
+				   	 player1.sendToClient(arg0);
+			         player2.sendToClient(arg0);
+			       }
+			       catch (IOException e) {
+			         e.printStackTrace();
+			       }
+		   }
+	   }
 	  
   }
 
@@ -153,4 +234,6 @@ public class CheatServer extends AbstractServer
     log.append("Listening exception: " + exception.getMessage() + "\n");
     log.append("Press Listen to restart server\n");
   }
+  
+
 }
