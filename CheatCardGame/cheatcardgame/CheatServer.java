@@ -163,6 +163,7 @@ public class CheatServer extends AbstractServer
 			         e.printStackTrace();
 			       }		   }
 		   else if (((PlayGameData) arg0).getCheat() == true) {
+			   ((PlayGameData) arg0).setCards(discardPile);
 			   if (prevCard.contains(cardOrder[iterator])) { // if previous card plays matches the correct card order
 				   try {
 				         arg1.sendToClient("Cheat False"); //cheat accusation was false
@@ -172,7 +173,7 @@ public class CheatServer extends AbstractServer
 				       }
 				   if(arg1.equals(player1)) {
 					   try {
-					         player2.sendToClient("Cheater");
+					         player2.sendToClient(arg0);
 					       }
 					       catch (IOException e) {
 					         e.printStackTrace();
@@ -180,7 +181,7 @@ public class CheatServer extends AbstractServer
 					   }
 				   else {
 					   try {
-					         player1.sendToClient("Cheater");
+					         player1.sendToClient(arg0);
 					       }
 					       catch (IOException e) {
 					         e.printStackTrace();
@@ -196,7 +197,7 @@ public class CheatServer extends AbstractServer
 				       }
 				   if(arg1.equals(player1)) {
 					   try {
-					         player1.sendToClient("Cheater");
+					         player1.sendToClient(arg0);
 					       }
 					       catch (IOException e) {
 					         e.printStackTrace();
@@ -204,7 +205,7 @@ public class CheatServer extends AbstractServer
 					   }
 				   else {
 					   try {
-					         player2.sendToClient("Cheater");
+					         player2.sendToClient(arg0);
 					       }
 					       catch (IOException e) {
 					         e.printStackTrace();
@@ -220,6 +221,7 @@ public class CheatServer extends AbstractServer
 			       catch (IOException e) {
 			         e.printStackTrace();
 			       }
+			   discardPile.add(((PlayGameData) arg0).getPlayedCard());
 		   }
 	   }
 	  

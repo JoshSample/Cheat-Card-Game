@@ -1,6 +1,7 @@
 package cheatcardgame;
 
 import java.io.Serializable;
+import java.util.*;
 
 public class PlayGameData implements Serializable {
 	//private Player player;
@@ -9,6 +10,7 @@ public class PlayGameData implements Serializable {
 	private int opponentCount;
 	private boolean turn;
 	private boolean cheat;
+	private ArrayList<String> cards;
 	private String playedCard;
 	
 	public PlayGameData(Player player, Player opponent) {
@@ -44,6 +46,12 @@ public class PlayGameData implements Serializable {
 	}
 	public String getPlayedCard() {
 		return playedCard;
+	}
+	public void setCards(ArrayList<String> cards) {
+		this.cards = cards;
+	}
+	public ArrayList<String> getCards(){
+		return cards;
 	}
 	
 	
