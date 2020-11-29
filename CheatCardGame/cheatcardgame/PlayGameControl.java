@@ -15,8 +15,7 @@ import cheatcardgame.LoginPanel;
 public class PlayGameControl implements ActionListener {
 	private CheatClient cheatClient;
 	private JPanel container;
-	private Player player;
-	private Player opponent;
+	private boolean turn = false;
 	private ArrayList<String> deck = new ArrayList<String>();
 	private int currentCard = 0;
 	
@@ -25,12 +24,21 @@ public class PlayGameControl implements ActionListener {
 		this.container = container;
 	}
 	
-	public void setPlayer(Player player) {
-		this.player = player;
+	
+	public ArrayList<String> getDeck() {
+		return deck;
 	}
 	
-	public void setOpponent(Player opponent) {
-		this.opponent = opponent;
+	public void setTurn(boolean turn) {
+		this.turn = turn;
+	}
+	
+	public boolean getTurn() {
+		return turn;
+	}
+	
+	public void setInstructions(String instructions) {
+		
 	}
 
 	@Override
@@ -57,7 +65,7 @@ public class PlayGameControl implements ActionListener {
 	    else if (command == "Forward")
 	    {
 	    	currentCard += 1;
-	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1); //subject to change with cardLayout
+	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4); //subject to change with cardLayout
 	        playGamePanel.setCurrentCard(deck.get(currentCard));
 	    }
 	    
@@ -70,7 +78,11 @@ public class PlayGameControl implements ActionListener {
 	    //call a player's bluff and confirm if they are making a legal play.
 	    else if (command == "Cheat")
 	    {
-	    	//cheatClient.sendToServer("Cheat")
+	    	try {
+	    	cheatClient.sendToServer("Cheat");
+	    	} catch(IOException e1) {
+	    		e1.printStackTrace();
+	    	}
 	    }
 	    
 //	    //Place your selected cards into the discard pile.

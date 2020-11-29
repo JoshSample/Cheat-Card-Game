@@ -160,7 +160,6 @@ public class CheatServer extends AbstractServer
 		   if (((PlayGameData) arg0).getTurn() == false) {
 			   try {
 			         arg1.sendToClient("invalid");
-			         //need two players for sending individual messages
 			       }
 			       catch (IOException e) {
 			         e.printStackTrace();
@@ -218,6 +217,7 @@ public class CheatServer extends AbstractServer
 		   }
 		   else {
 			   try {
+				   	 prevCard = ((PlayGameData) arg0).getPlayedCard();
 				   	 player1.sendToClient(arg0);
 			         player2.sendToClient(arg0);
 			       }

@@ -119,6 +119,13 @@ public class PlayGamePanel extends JPanel {
 		Image newimg = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
 		imageIcon.setImage(newimg);
 	}
+	public void setCardCounts(int player, int opponent) {
+		playerCount.setText(Integer.toString(player));
+		opponentCount.setText(Integer.toString(opponent));
+	}
+	public JLabel getInstructions() {
+		return lblInstructions;
+	}
 	
 	
 	
