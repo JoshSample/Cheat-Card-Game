@@ -33,14 +33,12 @@ public class Database {
 			Statement stmt=conn.createStatement();
 			ResultSet rs=stmt.executeQuery(query);
 			int i = 0;
-			if (query.contains("user")) {
-				while(rs.next()) 
-				{
-					result.add(rs.getString(1) + "," + rs.getString(2));
-					if (rs.getString(1) == null)
-						return null;
-				}
+			while(rs.next()) {
+				result.add(rs.getString(1) + "," + rs.getString(2));
+				if (rs.getString(1) == null)
+					return null;
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -57,7 +55,7 @@ public class Database {
 
 	// checks login, if username and password match database return true
 	public boolean checkLogin(String username, String password) {
-		ArrayList<String> result = query("SELECT username, aes_decrypt(password, 'key') FROM user");
+		ArrayList<String> result = query("SELECT username, aes_decrypt(password, 'key') FROM users");
 		for (int i = 0; i < result.size()-1; i++) {
 			if (result.get(i).split(",")[0].equals(username)) {
 				if (result.get(i).split(",")[1].equals(password)) {
@@ -72,12 +70,12 @@ public class Database {
 
 	// checks if username is in use and if not creates new account
 	public boolean createNewAccount(String username, String password) {
-		ArrayList<String> result = query("SELECT username, aes_decrypt(password, 'key') FROM user");
+		ArrayList<String> result = query("SELECT username, aes_decrypt(password, 'key') FROM users");
 		for (int i = 0; i < result.size()-1; i++) {
 			if (result.get(i).split(",")[0].equals(username)) 
 				return false;
 		}
-		String dml = "INSERT INTO user VALUES('" + username + "', aes_encrypt('" + password + "','key'))";
+		String dml = "INSERT INTO users VALUES('" + username + "', aes_encrypt('" + password + "','key'))";
 		try {
 			executeDML(dml);
 		} catch (SQLException e) {
