@@ -22,8 +22,9 @@ public class CheatServer extends AbstractServer
   private Deck gameDeck;
   private Deck player1Hand;
   private Deck player2Hand;
+  private Card tempCard;
   private String prevCard;
-  private String[] cardOrder = {"A","2","3","4","5","6","7","8","9","J","Q","K"};
+  private String[] cardOrder = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
   private int iterator = 0;
 
   // Constructor for initializing the server with default settings.
@@ -94,6 +95,60 @@ public class CheatServer extends AbstractServer
     else if (player2 == null){
     	player2 = client;
     }
+  }
+  
+  //Method to create the full deck of cards
+  public void createFullDeck() {
+	  
+	  //Suit of Hearts
+	  for (int i = 0; i < cardOrder.length; i++) {
+		  gameDeck.addCard(cardOrder[i], "H");
+	  }
+	  
+	  //Suit of Diamonds
+	  for (int i = 0; i < cardOrder.length; i++) {
+		  gameDeck.addCard(cardOrder[i], "D");
+	  }
+	  
+	  //Suit of Clubs
+	  for (int i = 0; i < cardOrder.length; i++) {
+		  gameDeck.addCard(cardOrder[i], "C");
+	  }
+	  
+	  //Suit of Spades
+	  for (int i = 0; i < cardOrder.length; i++) {
+		  gameDeck.addCard(cardOrder[i], "S");
+	  }
+	  
+	  //Shuffle the deck after it is created
+	  gameDeck.shuffleDeck();
+  }
+  
+  //Splits the full deck in two and assigns it to each player
+  public void assignPlayerHands() throws IOException {
+	  
+	  //Assign a hand to player 1
+	  for (int i = 0; i < 25; i++) {
+		  Card card = new Card("temp", "temp");
+		  card = gameDeck.getCard(i);
+		  String cardName = card.getName();
+		  String suitName = card.getSuit();
+		  player1Hand.addCard(cardName, suitName);
+		  gameDeck.removeCard(cardName, suitName);
+	  }
+	  player1.sendToClient(player1Hand);
+	  
+	  //Assign a hand to player 2
+	  for (int i = 0; i < 25; i++) {
+		  Card card = new Card("temp", "temp");
+		  card = gameDeck.getCard(i);
+		  String cardName = card.getName();
+		  String suitName = card.getSuit();
+		  player2Hand.addCard(cardName, suitName);
+		  gameDeck.removeCard(cardName, suitName);
+	  }
+	  player2.sendToClient(player2Hand);
+	  
   }
 
   // When a message is received from a client, handle it.

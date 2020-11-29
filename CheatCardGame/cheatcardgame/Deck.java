@@ -6,11 +6,17 @@ import java.util.Collections;
 public class Deck {
 
 	private List<Card> cardList;
+	private int index;
 	
 	public Deck(Card card) {
 		
 		cardList.add(card);
 		
+	}
+	
+	public void setIndex(int index) {
+		
+		this.index = index;
 	}
 	
 	public void removeCard(String cardName, String suitName) {
@@ -35,6 +41,11 @@ public class Deck {
 	public void shuffleDeck() {
 		
 		Collections.shuffle(cardList);
+	}
+	
+	public Card getCard(int index) {
+		
+		return cardList.get(index);
 	}
 	
 	public String toString() {

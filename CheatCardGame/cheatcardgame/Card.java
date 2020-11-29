@@ -11,6 +11,16 @@ public class Card {
 		 this.suitName = suitName;
 		 
 	 }
+	 
+	public void setCardName(String cardName) {
+		
+		this.cardName = cardName;
+	}
+	
+	public void setSuitName(String suitName) {
+		
+		this.suitName = suitName;
+	}
 	
 	public String getName() {
 		return cardName;
