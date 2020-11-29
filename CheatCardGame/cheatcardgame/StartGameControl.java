@@ -27,7 +27,7 @@ public class StartGameControl implements ActionListener {
 		// Start Game button sends the user into the Play Game panel
 		else if (command.equals("Start Game")) {
 			CardLayout cardLayout = (CardLayout)container.getLayout();
-			cardLayout.show(container, "4");
+			cardLayout.show(container, "5");
 		}
 	}
 

@@ -123,8 +123,8 @@ public class PlayGamePanel extends JPanel {
 		playerCount.setText(Integer.toString(player));
 		opponentCount.setText(Integer.toString(opponent));
 	}
-	public JLabel getInstructions() {
-		return lblInstructions;
+	public void setInstructions(String instructions) {
+		lblInstructions.setText(instructions);
 	}
 	
 	
