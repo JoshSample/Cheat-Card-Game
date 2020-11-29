@@ -6,9 +6,7 @@ import java.sql.*;
 
 
 public class Database {
-
 	private Connection conn;
-	//Add any other data fields you like – at least a Connection object is mandatory
 
 	public Database() throws IOException {
 		//Add your code here
