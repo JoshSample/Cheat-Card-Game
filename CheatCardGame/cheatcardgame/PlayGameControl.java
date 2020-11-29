@@ -38,7 +38,8 @@ public class PlayGameControl implements ActionListener {
 	}
 	
 	public void setInstructions(String instructions) {
-		
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
+		playGamePanel.setInstructions(instructions);
 	}
 
 	@Override

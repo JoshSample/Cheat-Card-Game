@@ -52,7 +52,10 @@ public class CheatClient extends AbstractClient
         createAccountControl.createAccountSuccess();
       }
       else if (message.equals("Cheat True")) {
-    	  playGameControl.getInstructions().
+    	  playGameControl.setInstructions("Cheater! Take all of the cards!");
+      }
+      else if (message.equals("Cheat False")) {
+    	  playGameControl.setInstructions("You were wrong! Take all of the cards!");
       }
     }
     
