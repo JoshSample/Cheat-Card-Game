@@ -106,7 +106,7 @@ public class CheatServer extends AbstractServer
 
 			// Check the username and password with the database.
 			LoginData data = (LoginData)arg0;
-			Object result = null;
+			Object result;
 
 			if (database.checkLogin(data.getUsername(), data.getPassword()))
 			{
@@ -132,7 +132,7 @@ public class CheatServer extends AbstractServer
 
 			//Try to create the account.
 			CreateAccountData data = (CreateAccountData)arg0;
-			Object result = null;
+			Object result;
 
 			if (database.createNewAccount(data.getUsername(), data.getPassword()))
 			{

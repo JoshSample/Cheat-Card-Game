@@ -50,13 +50,12 @@ public class Database {
 		Statement stmt=conn.createStatement();
 		//Execute a DML statement
 		stmt.execute(dml);
-		conn.close();
 	}
 
 	// checks login, if username and password match database return true
 	public boolean checkLogin(String username, String password) {
 		ArrayList<String> result = query("SELECT username, aes_decrypt(password, 'key') FROM users");
-		for (int i = 0; i < result.size()-1; i++) {
+		for (int i = 0; i < result.size(); i++) {
 			if (result.get(i).split(",")[0].equals(username)) {
 				if (result.get(i).split(",")[1].equals(password)) {
 					return true;
@@ -71,7 +70,7 @@ public class Database {
 	// checks if username is in use and if not creates new account
 	public boolean createNewAccount(String username, String password) {
 		ArrayList<String> result = query("SELECT username, aes_decrypt(password, 'key') FROM users");
-		for (int i = 0; i < result.size()-1; i++) {
+		for (int i = 0; i < result.size(); i++) {
 			if (result.get(i).split(",")[0].equals(username)) 
 				return false;
 		}
