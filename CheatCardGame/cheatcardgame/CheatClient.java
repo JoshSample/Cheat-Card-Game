@@ -58,11 +58,13 @@ public class CheatClient extends AbstractClient
     	  playGameControl.setInstructions("You were wrong! Take all of the cards!");
       }
     }
-    if (arg0 instanceof ArrayList) {
-    	playGameControl.setDeck((ArrayList<String>)arg0);
+    if (arg0 instanceof ArrayList<?>) {
+    	ArrayList<String> deck = (ArrayList<String>)arg0;
+    	playGameControl.setDeck(deck);
+    	playGameControl.initialize();
     }
     
- // If we received an Error, figure out where to display it.
+    // If we received an Error, figure out where to display it.
     else if (arg0 instanceof Error)
     {
       // Get the Error object.
@@ -98,11 +100,10 @@ public class CheatClient extends AbstractClient
     		//iterate turn and place card
     		String placedCard = ((PlayGameData) arg0).getPlayedCard();
     		if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == true)  {
-    			playGameControl.setCard(placedCard);
+    			playGameControl.removeCard(placedCard);
     			playGameControl.setTurn(false);
     		}
     		if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == false)  {
-    			playGameControl.setCard(placedCard);
     			playGameControl.setTurn(true);
     		}
     		

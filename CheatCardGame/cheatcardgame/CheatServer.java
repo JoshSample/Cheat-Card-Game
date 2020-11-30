@@ -17,8 +17,10 @@ public class CheatServer extends AbstractServer
   private JLabel status;
   private boolean running = false;
   private Database database;
-  private ConnectionToClient player1;
-  private ConnectionToClient player2;
+  private ConnectionToClient conn1;
+  private ConnectionToClient conn2;
+  private Player player1;
+  private Player player2;
   private ArrayList<String> discardPile = new ArrayList<String>();
   private ArrayList<String> gameDeck = new ArrayList<String>();
   private ArrayList<String> player1Hand = new ArrayList<String>();
@@ -53,19 +55,11 @@ public class CheatServer extends AbstractServer
   public void clientConnected(ConnectionToClient client)
   {
     log.append("Client " + client.getId() + " connected\n");
-    if(player1 == null) {
-    	player1 = client;
+    if(conn1 == null) {
+    	conn1 = client;
     }
-    else if (player2 == null){
-    	player2 = client;
-    }
-    else if (!player1.equals(null) && !player2.equals(null)) {
-    	createFullDeck();
-    	try {
-    	assignPlayerHands();
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
+    else if (conn2 == null){
+    	conn2 = client;
     }
   }
   
@@ -105,7 +99,7 @@ public class CheatServer extends AbstractServer
 		  player1Hand.add(card);
 		  gameDeck.remove(card);
 	  }
-	  player1.sendToClient(player1Hand);
+	  conn1.sendToClient(player1Hand);
 	  
 	  //Assign a hand to player 2
 	  for (int i = 0; i < 25; i++) {
@@ -113,7 +107,7 @@ public class CheatServer extends AbstractServer
 		  player2Hand.add(card);
 		  gameDeck.remove(card);
 	  }
-	  player2.sendToClient(player2Hand);
+	  conn2.sendToClient(player2Hand);
 	  
   }
 		
@@ -175,14 +169,33 @@ public class CheatServer extends AbstractServer
 			{
 				result = new Error("The username and password are incorrect.", "Login");
 				log.append("Client " + arg1.getId() + " failed to log in\n");
+				return;
 			}
 
 			try {
 				arg1.sendToClient(result);
 			}
 			catch (IOException e) {
-				return;
+				e.printStackTrace();
 			} 
+			
+			if(player1 == null) {
+				player1 = new Player(data.getUsername(), data.getPassword());
+			}
+			else if (player2 == null) {
+				player2 = new Player(data.getUsername(), data.getPassword());
+			}
+			
+			if (player1 != null && player2 != null) {
+		    	createFullDeck();
+		    	try {
+		    	assignPlayerHands();
+		    	} catch (IOException e) {
+		    		e.printStackTrace();
+		    	}
+		    }
+			
+			return;
 		}
 
 		//If we receive Create Account data, verify that the account does not exist
@@ -232,7 +245,7 @@ public class CheatServer extends AbstractServer
 					}
 					if(arg1.equals(player1)) {
 						try {
-							player2.sendToClient(arg0);
+							conn2.sendToClient(arg0);
 						}
 						catch (IOException e) {
 							e.printStackTrace();
@@ -240,7 +253,7 @@ public class CheatServer extends AbstractServer
 					}
 					else {
 						try {
-							player1.sendToClient(arg0);
+							conn1.sendToClient(arg0);
 						}
 						catch (IOException e) {
 							e.printStackTrace();
@@ -256,7 +269,7 @@ public class CheatServer extends AbstractServer
 					}
 					if(arg1.equals(player1)) {
 						try {
-							player1.sendToClient(arg0);
+							conn1.sendToClient(arg0);
 						}
 						catch (IOException e) {
 							e.printStackTrace();
@@ -264,7 +277,7 @@ public class CheatServer extends AbstractServer
 					}
 					else {
 						try {
-							player2.sendToClient(arg0);
+							conn2.sendToClient(arg0);
 						}
 						catch (IOException e) {
 							e.printStackTrace();
@@ -275,8 +288,8 @@ public class CheatServer extends AbstractServer
 			else {
 				try {
 					prevCard = ((PlayGameData) arg0).getPlayedCard();
-					player1.sendToClient(arg0);
-					player2.sendToClient(arg0);
+					conn1.sendToClient(arg0);
+					conn2.sendToClient(arg0);
 				}
 				catch (IOException e) {
 					e.printStackTrace();

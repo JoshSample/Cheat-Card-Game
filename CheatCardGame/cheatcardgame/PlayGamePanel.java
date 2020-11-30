@@ -98,7 +98,7 @@ public class PlayGamePanel extends JPanel {
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		//scaling image down to workable sizing 
-		ImageIcon imageIcon = new ImageIcon("/CheatCardGame/cards/blue_back.png");
+		ImageIcon imageIcon = new ImageIcon(PlayGamePanel.class.getResource("/cheatcardgame/cards/blue_back.png"));
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
 		imageIcon = new ImageIcon(newimg);
@@ -114,7 +114,8 @@ public class PlayGamePanel extends JPanel {
 	}
 	
 	public void setCurrentCard(String card) {
-		ImageIcon imageIcon = new ImageIcon("CheatCardGame/cards/" + card);
+		String str ="/cheatcardgame/cards/" + card + ".png";
+		ImageIcon imageIcon = new ImageIcon(PlayGamePanel.class.getResource(str));
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
 		imageIcon.setImage(newimg);

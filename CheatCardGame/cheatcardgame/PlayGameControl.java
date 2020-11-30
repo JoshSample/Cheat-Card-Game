@@ -49,6 +49,14 @@ public class PlayGameControl implements ActionListener {
 		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
 		playGamePanel.setCurrentCard(card);
 	}
+	public void initialize() {
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
+		playGamePanel.setCurrentCard(deck.get(0));
+		
+	}
+	public void removeCard(String card) {
+		deck.remove(card);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
