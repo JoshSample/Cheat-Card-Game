@@ -9,7 +9,6 @@ public class Database {
 	private Connection conn;
 
 	public Database() throws IOException {
-		//Add your code here
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream("cheatcardgame/db.properties");
 		prop.load(fis);
