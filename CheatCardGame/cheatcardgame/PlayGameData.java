@@ -10,7 +10,7 @@ public class PlayGameData implements Serializable {
 	private int opponentCount;
 	private boolean turn;
 	private boolean cheat;
-	private ArrayList<String> cards;
+	private ArrayList<String> cards = new ArrayList<String>();
 	private String playedCard;
 	
 	public PlayGameData(Player player, Player opponent) {
