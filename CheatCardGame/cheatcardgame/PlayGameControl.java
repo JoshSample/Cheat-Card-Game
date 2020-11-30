@@ -29,6 +29,10 @@ public class PlayGameControl implements ActionListener {
 		return deck;
 	}
 	
+	public void setDeck(ArrayList<String> deck) {
+		this.deck = deck;
+	}
+	
 	public void setTurn(boolean turn) {
 		this.turn = turn;
 	}
@@ -40,6 +44,10 @@ public class PlayGameControl implements ActionListener {
 	public void setInstructions(String instructions) {
 		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
 		playGamePanel.setInstructions(instructions);
+	}
+	public void setCard(String card) {
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
+		playGamePanel.setCurrentCard(card);
 	}
 
 	@Override

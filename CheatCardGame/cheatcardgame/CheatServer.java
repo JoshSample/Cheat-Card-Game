@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -19,9 +20,9 @@ public class CheatServer extends AbstractServer
   private ConnectionToClient player1;
   private ConnectionToClient player2;
   private ArrayList<String> discardPile = new ArrayList<String>();
-  private Deck gameDeck;
-  private Deck player1Hand;
-  private Deck player2Hand;
+  private ArrayList<String> gameDeck = new ArrayList<String>();
+  private ArrayList<String> player1Hand = new ArrayList<String>();
+  private ArrayList<String> player2Hand = new ArrayList<String>();
   private Card tempCard;
   private String prevCard;
   private String[] cardOrder = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
@@ -58,34 +59,41 @@ public class CheatServer extends AbstractServer
     else if (player2 == null){
     	player2 = client;
     }
+    else if (!player1.equals(null) && !player2.equals(null)) {
+    	createFullDeck();
+    	try {
+    	assignPlayerHands();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
   }
   
   
   //Method to create the full deck of cards
   public void createFullDeck() {
-	  
 	  //Suit of Hearts
 	  for (int i = 0; i < cardOrder.length; i++) {
-		  gameDeck.addCard(cardOrder[i], "H");
+		  gameDeck.add(cardOrder[i] + "H");
 	  }
 	  
 	  //Suit of Diamonds
 	  for (int i = 0; i < cardOrder.length; i++) {
-		  gameDeck.addCard(cardOrder[i], "D");
+		  gameDeck.add(cardOrder[i] + "D");
 	  }
 	  
 	  //Suit of Clubs
 	  for (int i = 0; i < cardOrder.length; i++) {
-		  gameDeck.addCard(cardOrder[i], "C");
+		  gameDeck.add(cardOrder[i] + "C");
 	  }
 	  
 	  //Suit of Spades
 	  for (int i = 0; i < cardOrder.length; i++) {
-		  gameDeck.addCard(cardOrder[i], "S");
+		  gameDeck.add(cardOrder[i] + "S");
 	  }
 	  
 	  //Shuffle the deck after it is created
-	  gameDeck.shuffleDeck();
+	  Collections.shuffle(gameDeck);
   }
   
   //Splits the full deck in two and assigns it to each player
@@ -93,23 +101,17 @@ public class CheatServer extends AbstractServer
 	  
 	  //Assign a hand to player 1
 	  for (int i = 0; i < 25; i++) {
-		  Card card = new Card("temp", "temp");
-		  card = gameDeck.getCard(i);
-		  String cardName = card.getName();
-		  String suitName = card.getSuit();
-		  player1Hand.addCard(cardName, suitName);
-		  gameDeck.removeCard(cardName, suitName);
+		  String card = gameDeck.get(i);
+		  player1Hand.add(card);
+		  gameDeck.remove(card);
 	  }
 	  player1.sendToClient(player1Hand);
 	  
 	  //Assign a hand to player 2
 	  for (int i = 0; i < 25; i++) {
-		  Card card = new Card("temp", "temp");
-		  card = gameDeck.getCard(i);
-		  String cardName = card.getName();
-		  String suitName = card.getSuit();
-		  player2Hand.addCard(cardName, suitName);
-		  gameDeck.removeCard(cardName, suitName);
+		  String card = gameDeck.get(i);
+		  player2Hand.add(card);
+		  gameDeck.remove(card);
 	  }
 	  player2.sendToClient(player2Hand);
 	  
