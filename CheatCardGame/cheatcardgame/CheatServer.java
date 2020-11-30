@@ -94,16 +94,16 @@ public class CheatServer extends AbstractServer
   public void assignPlayerHands() throws IOException {
 	  
 	  //Assign a hand to player 1
-	  for (int i = 0; i < 25; i++) {
-		  String card = gameDeck.get(i);
+	  for (int i = 0; i < 26; i++) {
+		  String card = gameDeck.get(0);
 		  player1Hand.add(card);
 		  gameDeck.remove(card);
 	  }
 	  conn1.sendToClient(player1Hand);
 	  
 	  //Assign a hand to player 2
-	  for (int i = 0; i < 25; i++) {
-		  String card = gameDeck.get(i);
+	  for (int i = 0; i < 26; i++) {
+		  String card = gameDeck.get(0);
 		  player2Hand.add(card);
 		  gameDeck.remove(card);
 	  }

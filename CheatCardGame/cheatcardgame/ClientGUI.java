@@ -45,6 +45,7 @@ public class ClientGUI extends JFrame
     //Set the client info
     client.setLoginControl(lc);
     client.setCreateAccountControl(cac);
+    client.setPlayGameControl(pgc);
    
     
     // Create the four views. (need the controller to register with the Panels

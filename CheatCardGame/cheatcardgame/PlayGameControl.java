@@ -8,8 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import cheatcardgame.LoginData;
-import cheatcardgame.LoginPanel;
+import java.awt.Component;
 
 
 public class PlayGameControl implements ActionListener {
@@ -42,17 +41,25 @@ public class PlayGameControl implements ActionListener {
 	}
 	
 	public void setInstructions(String instructions) {
-		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
 		playGamePanel.setInstructions(instructions);
 	}
 	public void setCard(String card) {
-		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
 		playGamePanel.setCurrentCard(card);
 	}
 	public void initialize() {
-		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1);
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
 		playGamePanel.setCurrentCard(deck.get(0));
-		
+		if (deck.contains("AS")) {
+			turn = true;
+			setInstructions("You have the Ace of Spades! Your turn.");
+		}
+		else {
+			turn = false;
+			setInstructions("Your opponent has the Ace of Spades! Their turn.");
+		}
+	
 	}
 	public void removeCard(String card) {
 		deck.remove(card);
@@ -67,30 +74,24 @@ public class PlayGameControl implements ActionListener {
 	    if (command == "Back")
 	    {
 	    	currentCard -= 1;
-	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(1); //subject to change with cardLayout
-	        playGamePanel.setCurrentCard(deck.get(currentCard).toString());
+	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
+	        playGamePanel.setCurrentCard(deck.get(currentCard%deck.size()).toString());
 	    	
 	    }
 
 	    //Select Card to be played
 	    else if (command == "Select")
 	    {
-	    	
+	    	//PlayGameData data = new PlayGameData();
 	    }
 	    
 	    //Iterate forward through held cards
 	    else if (command == "Forward")
 	    {
 	    	currentCard += 1;
-	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4); //subject to change with cardLayout
-	        playGamePanel.setCurrentCard(deck.get(currentCard));
+	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4); 
+	        playGamePanel.setCurrentCard(deck.get(currentCard%deck.size()).toString());
 	    }
-	    
-//	    //deselect all cards held in hand
-//	    else if (command == "Deselect")
-//	    {
-//	    	
-//	    }
 	    
 	    //call a player's bluff and confirm if they are making a legal play.
 	    else if (command == "Cheat")
@@ -101,11 +102,5 @@ public class PlayGameControl implements ActionListener {
 	    		e1.printStackTrace();
 	    	}
 	    }
-	    
-//	    //Place your selected cards into the discard pile.
-//	    else if (command == "play")
-//	    {
-//	    	
-//	    }
-	}	
+	}
 }
