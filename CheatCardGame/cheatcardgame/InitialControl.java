@@ -9,7 +9,7 @@ public class InitialControl implements ActionListener
   // Private data field for storing the container.
   private JPanel container;
   // Constructor for the initial controller.
-  public InitialControl(JPanel container, CheatClient client)
+  public InitialControl(JPanel container)
   {
     this.container = container;
   }
