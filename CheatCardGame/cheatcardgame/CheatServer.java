@@ -226,14 +226,14 @@ public class CheatServer extends AbstractServer
 
 
 		else if (arg0 instanceof PlayGameData) {
-			if (((PlayGameData) arg0).getTurn() == false) {
+			if (((PlayGameData) arg0).getTurn() == false && ((PlayGameData)arg0).getCheat() == false) {
 				try {
 					arg1.sendToClient("invalid");
 				}
 				catch (IOException e) {
 					e.printStackTrace();
 				}		   }
-			else if (((PlayGameData) arg0).getCheat() == true) {
+			else if (((PlayGameData) arg0).getTurn() == false && ((PlayGameData)arg0).getCheat() == true) {
 				((PlayGameData) arg0).setCards(discardPile);
 				if (prevCard.contains(cardOrder[iterator])) { // if previous card plays matches the correct card order
 					try {
@@ -285,8 +285,8 @@ public class CheatServer extends AbstractServer
 				}
 			}
 			else {
+				prevCard = ((PlayGameData) arg0).getPlayedCard();
 				try {
-					prevCard = ((PlayGameData) arg0).getPlayedCard();
 					conn1.sendToClient(arg0);
 					conn2.sendToClient(arg0);
 				}

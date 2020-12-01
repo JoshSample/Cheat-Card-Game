@@ -83,19 +83,26 @@ public class CheatClient extends AbstractClient
       }
     }
     else if(arg0 instanceof PlayGameData) {
-    	//check if discard pile list is not null
     		// add cards to player hand
     		ArrayList<String> deck = playGameControl.getDeck();
     		ArrayList<String> cards = ((PlayGameData) arg0).getCards();
     		deck.addAll(cards);
+    		
     		//iterate turn and place card
     		String placedCard = ((PlayGameData) arg0).getPlayedCard();
     		if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == true)  {
     			playGameControl.removeCard(placedCard);
+    			playGameControl.setCard(deck.get(0));
+    			playGameControl.setCurrentCard(0);
+    			playGameControl.setInstructions("Card laid down. Their turn.");
+    			playGameControl.setPlayerCount(playGameControl.getPlayerCount()-1);
     			playGameControl.setTurn(false);
     		}
-    		if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == false)  {
+    		else if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == false)  {
+    			playGameControl.setInstructions("Opponent laid down card. Your turn.");
+    			playGameControl.setOpponentCount(playGameControl.getOpponentCount()-1);
     			playGameControl.setTurn(true);
+    			
     		}
     }
   }  

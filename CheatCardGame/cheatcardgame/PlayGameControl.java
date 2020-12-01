@@ -69,7 +69,27 @@ public class PlayGameControl implements ActionListener {
 	public void removeCard(String card) {
 		deck.remove(card);
 	}
-
+	public void setCurrentCard(int currentCard) {
+		this.currentCard = currentCard;
+	}
+	
+	public void setPlayerCount(int playerCount) {
+		this.playerCount = playerCount;
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
+		playGamePanel.setPlayerCount(playerCount);
+	}
+	public void setOpponentCount(int opponentCount) {
+		this.opponentCount = opponentCount;
+		PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
+		playGamePanel.setOpponentCount(opponentCount);
+	}
+	public int getPlayerCount() {
+		return playerCount;
+	}
+	public int getOpponentCount() {
+		return opponentCount;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -90,7 +110,7 @@ public class PlayGameControl implements ActionListener {
 	    //Select Card to be played
 	    else if (command == "Select")
 	    {
-	    	PlayGameData data = new PlayGameData(turn, false, deck.get(currentCard), playerCount);
+	    	PlayGameData data = new PlayGameData(turn, false, deck.get(currentCard%deck.size()), playerCount);
 	    	try {
 		    	cheatClient.sendToServer(data);
 		    	} catch(IOException e1) {
