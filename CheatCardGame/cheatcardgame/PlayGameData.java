@@ -13,10 +13,13 @@ public class PlayGameData implements Serializable {
 	private ArrayList<String> cards = new ArrayList<String>();
 	private String playedCard;
 	
-	public PlayGameData(Player player, Player opponent) {
-		//this.player = player;
-		//this.opponent = opponent;
+	public PlayGameData(boolean turn, boolean cheat, String playedCard, int playerCount) {
+		this.turn = turn;
+		this.playedCard = playedCard;
+		this.cheat = cheat;
+		this.playerCount = playerCount;
 	}
+	
 	
 	public void setTurn(boolean val) {
 		this.turn = val;

@@ -125,6 +125,13 @@ public class PlayGamePanel extends JPanel {
 		playerCount.setText(Integer.toString(player));
 		opponentCount.setText(Integer.toString(opponent));
 	}
+	public void setPlayerCount(int playerCount) {
+		this.playerCount.setText(Integer.toString(playerCount));
+	}
+	public void setOpponentCount(int opponentCount) {
+		this.opponentCount.setText(Integer.toString(opponentCount));
+
+	}
 	public void setInstructions(String instructions) {
 		lblInstructions.setText(instructions);
 	}

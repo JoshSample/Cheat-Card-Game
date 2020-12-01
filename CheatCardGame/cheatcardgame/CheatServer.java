@@ -25,7 +25,6 @@ public class CheatServer extends AbstractServer
   private ArrayList<String> gameDeck = new ArrayList<String>();
   private ArrayList<String> player1Hand = new ArrayList<String>();
   private ArrayList<String> player2Hand = new ArrayList<String>();
-  private Card tempCard;
   private String prevCard;
   private String[] cardOrder = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
   private int iterator = 0;
@@ -243,7 +242,7 @@ public class CheatServer extends AbstractServer
 					catch (IOException e) {
 						e.printStackTrace();
 					}
-					if(arg1.equals(player1)) {
+					if(arg1.equals(conn1)) {
 						try {
 							conn2.sendToClient(arg0);
 						}
@@ -267,7 +266,7 @@ public class CheatServer extends AbstractServer
 					catch (IOException e) {
 						e.printStackTrace();
 					}
-					if(arg1.equals(player1)) {
+					if(arg1.equals(conn1)) {
 						try {
 							conn1.sendToClient(arg0);
 						}
@@ -295,6 +294,7 @@ public class CheatServer extends AbstractServer
 					e.printStackTrace();
 				}
 				discardPile.add(((PlayGameData) arg0).getPlayedCard());
+				iterator++;
 			}
 		}
 

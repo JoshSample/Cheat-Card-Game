@@ -17,6 +17,9 @@ public class PlayGameControl implements ActionListener {
 	private boolean turn = false;
 	private ArrayList<String> deck = new ArrayList<String>();
 	private int currentCard = 0;
+	private int playerCount = 26;
+	private int opponentCount = 26;
+
 	
 	public PlayGameControl(JPanel container, CheatClient cheatClient) {
 		this.cheatClient = cheatClient;
@@ -59,6 +62,8 @@ public class PlayGameControl implements ActionListener {
 			turn = false;
 			setInstructions("Your opponent has the Ace of Spades! Their turn.");
 		}
+		playGamePanel.setPlayerCount(playerCount);
+		playGamePanel.setOpponentCount(opponentCount);
 	
 	}
 	public void removeCard(String card) {
@@ -74,6 +79,9 @@ public class PlayGameControl implements ActionListener {
 	    if (command == "Back")
 	    {
 	    	currentCard -= 1;
+	    	if (currentCard < 0) {
+	    		currentCard = deck.size();
+	    	}
 	    	PlayGamePanel playGamePanel = (PlayGamePanel)container.getComponent(4);
 	        playGamePanel.setCurrentCard(deck.get(currentCard%deck.size()).toString());
 	    	
@@ -82,7 +90,12 @@ public class PlayGameControl implements ActionListener {
 	    //Select Card to be played
 	    else if (command == "Select")
 	    {
-	    	//PlayGameData data = new PlayGameData();
+	    	PlayGameData data = new PlayGameData(turn, false, deck.get(currentCard), playerCount);
+	    	try {
+		    	cheatClient.sendToServer(data);
+		    	} catch(IOException e1) {
+		    		e1.printStackTrace();
+		    	}
 	    }
 	    
 	    //Iterate forward through held cards
@@ -96,8 +109,9 @@ public class PlayGameControl implements ActionListener {
 	    //call a player's bluff and confirm if they are making a legal play.
 	    else if (command == "Cheat")
 	    {
+	    	PlayGameData data = new PlayGameData(turn, true, "", playerCount);
 	    	try {
-	    	cheatClient.sendToServer("Cheat");
+	    	cheatClient.sendToServer(data);
 	    	} catch(IOException e1) {
 	    		e1.printStackTrace();
 	    	}
