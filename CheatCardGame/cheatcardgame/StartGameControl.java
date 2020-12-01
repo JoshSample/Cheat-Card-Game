@@ -7,12 +7,10 @@ import java.awt.event.*;
 public class StartGameControl implements ActionListener {
 	// private data fields
 	private JPanel container;
-	private CheatClient cheatClient;
 
 	// constructor, sets container and client
-	public StartGameControl(JPanel container, CheatClient cheatClient) {
+	public StartGameControl(JPanel container) {
 		this.container = container;
-		this.cheatClient = cheatClient;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
