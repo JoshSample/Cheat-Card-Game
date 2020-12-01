@@ -53,10 +53,10 @@ public class CheatClient extends AbstractClient
       {
         createAccountControl.createAccountSuccess();
       }
-      else if (message.equals("Win")) {
+      /*else if (message.equals("Win")) {
     	  playGameControl.setInstructions("You're the Winner!");
     	  playGameControl.setTurn(false);
-      }
+      }*/
       else if (message.equals("Lose")) {
     	  playGameControl.setInstructions("You Lose!");
     	  playGameControl.setTurn(false);
@@ -98,6 +98,8 @@ public class CheatClient extends AbstractClient
     			playGameControl.removeCard(placedCard);
     			if(deck.size() == 0) {
     				try {
+    				playGameControl.setInstructions("You're the Winner!");
+    			    playGameControl.setTurn(false);
     				this.sendToServer("Win");
     				} catch (IOException e) {
     					e.printStackTrace();

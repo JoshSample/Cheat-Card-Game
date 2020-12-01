@@ -151,23 +151,23 @@ public class CheatServer extends AbstractServer
 	public void handleMessageFromClient(Object arg0, ConnectionToClient arg1)
 	{
 		
-		if(arg0 == "Win") {
-			if(arg1 == conn1) {
-				try {
-				conn1.sendToClient("Win");
-				conn2.sendToClient("Lose");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			else {
-				try {
-					conn2.sendToClient("Win");
-					conn1.sendToClient("Lose");
+		if (arg0 instanceof String) {
+				if(arg1 == conn1) {
+					try {
+					conn1.sendToClient("Win");
+					conn2.sendToClient("Lose");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-			}
+				}
+				else {
+					try {
+						conn2.sendToClient("Win");
+						conn1.sendToClient("Lose");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+				}
 		}
 
 		//If we received LoginData, verify the account information
