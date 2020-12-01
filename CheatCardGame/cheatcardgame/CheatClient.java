@@ -1,6 +1,8 @@
 package cheatcardgame;
 
 import ocsf.client.AbstractClient;
+
+import java.io.IOException;
 import java.util.*;
 
 public class CheatClient extends AbstractClient
@@ -51,11 +53,13 @@ public class CheatClient extends AbstractClient
       {
         createAccountControl.createAccountSuccess();
       }
-      else if (message.equals("Cheat True")) {
-    	  playGameControl.setInstructions("Cheater! Take all of the cards!");
+      else if (message.equals("Win")) {
+    	  playGameControl.setInstructions("You're the Winner!");
+    	  playGameControl.setTurn(false);
       }
-      else if (message.equals("Cheat False")) {
-    	  playGameControl.setInstructions("You were wrong! Take all of the cards!");
+      else if (message.equals("Lose")) {
+    	  playGameControl.setInstructions("You Lose!");
+    	  playGameControl.setTurn(false);
       }
     }
     if (arg0 instanceof ArrayList<?>) {
@@ -92,15 +96,41 @@ public class CheatClient extends AbstractClient
     		String placedCard = ((PlayGameData) arg0).getPlayedCard();
     		if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == true)  {
     			playGameControl.removeCard(placedCard);
+    			if(deck.size() == 0) {
+    				try {
+    				this.sendToServer("Win");
+    				} catch (IOException e) {
+    					e.printStackTrace();
+    				}
+    				
+    			}
     			playGameControl.setCard(deck.get(0));
     			playGameControl.setCurrentCard(0);
     			playGameControl.setInstructions("Card laid down. Their turn.");
-    			playGameControl.setPlayerCount(playGameControl.getPlayerCount()-1);
+    			if(((PlayGameData) arg0).getCheatCheck() == 1) {
+        			playGameControl.setInstructions("Bad Call! Have some cards...");
+    			}
+    			if(((PlayGameData) arg0).getCheatCheck() == -1) {
+        			playGameControl.setInstructions("Good Call! Opponent got the discards.");
+        			playGameControl.setOpponentCount(playGameControl.getOpponentCount() + ((PlayGameData) arg0).getPileSize());
+
+    			}
+    			playGameControl.setPlayerCount(playGameControl.getDeck().size());
     			playGameControl.setTurn(false);
     		}
     		else if(((PlayGameData) arg0).getTurn() == true && playGameControl.getTurn() == false)  {
     			playGameControl.setInstructions("Opponent laid down card. Your turn.");
-    			playGameControl.setOpponentCount(playGameControl.getOpponentCount()-1);
+    			if(((PlayGameData) arg0).getCheatCheck() == 1) {
+        			playGameControl.setInstructions("Bad Call! Have some cards...");
+    			}
+    			if(((PlayGameData) arg0).getCheatCheck() == -1) {
+        			playGameControl.setInstructions("Good Call! Opponent got the discards.");
+        			playGameControl.setOpponentCount(playGameControl.getOpponentCount() + ((PlayGameData) arg0).getPileSize());
+    			}
+    			else {
+    				playGameControl.setOpponentCount(playGameControl.getOpponentCount()-1);    				
+    			}
+    			playGameControl.setPlayerCount(playGameControl.getDeck().size());
     			playGameControl.setTurn(true);
     			
     		}

@@ -150,6 +150,25 @@ public class CheatServer extends AbstractServer
 	// When a message is received from a client, handle it.
 	public void handleMessageFromClient(Object arg0, ConnectionToClient arg1)
 	{
+		
+		if(arg0 == "Win") {
+			if(arg1 == conn1) {
+				try {
+				conn1.sendToClient("Win");
+				conn2.sendToClient("Lose");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				try {
+					conn2.sendToClient("Win");
+					conn1.sendToClient("Lose");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+			}
+		}
 
 		//If we received LoginData, verify the account information
 		if (arg0 instanceof LoginData)
@@ -233,56 +252,57 @@ public class CheatServer extends AbstractServer
 				catch (IOException e) {
 					e.printStackTrace();
 				}		   }
-			else if (((PlayGameData) arg0).getTurn() == false && ((PlayGameData)arg0).getCheat() == true) {
-				((PlayGameData) arg0).setCards(discardPile);
-				if (prevCard.contains(cardOrder[iterator])) { // if previous card plays matches the correct card order
-					try {
-						arg1.sendToClient("Cheat False"); //cheat accusation was false
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-					if(arg1.equals(conn1)) {
+			else if (((PlayGameData) arg0).getTurn() == true && ((PlayGameData)arg0).getCheat() == true) {
+				if(prevCard.contains(cardOrder[iterator%cardOrder.length])){
+					((PlayGameData) arg0).setPileSize(discardPile.size());
+					((PlayGameData) arg0).setCheatCheck(-1);
+					if (arg1 == conn1) {
 						try {
-							conn2.sendToClient(arg0);
-						}
-						catch (IOException e) {
+						conn2.sendToClient(arg0);
+						((PlayGameData) arg0).setCheatCheck(1);
+						((PlayGameData) arg0).setCards(discardPile);
+						conn1.sendToClient(arg0);
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
 					else {
 						try {
 							conn1.sendToClient(arg0);
-						}
-						catch (IOException e) {
-							e.printStackTrace();
-						}
+							((PlayGameData) arg0).setCheatCheck(1);
+							((PlayGameData) arg0).setCards(discardPile);
+							conn2.sendToClient(arg0);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 					}
 				}
 				else {
-					try {
-						arg1.sendToClient("Cheat True");
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-					if(arg1.equals(conn1)) {
+					((PlayGameData) arg0).setPileSize(discardPile.size());
+					((PlayGameData) arg0).setCheatCheck(-1);
+					if (arg1 == conn1) {
 						try {
-							conn1.sendToClient(arg0);
-						}
-						catch (IOException e) {
+						conn1.sendToClient(arg0);
+						((PlayGameData) arg0).setCheatCheck(1);
+						((PlayGameData) arg0).setCards(discardPile);
+						conn2.sendToClient(arg0);
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
 					else {
 						try {
 							conn2.sendToClient(arg0);
-						}
-						catch (IOException e) {
-							e.printStackTrace();
-						}
+							((PlayGameData) arg0).setCheatCheck(1);
+							((PlayGameData) arg0).setCards(discardPile);
+							conn1.sendToClient(arg0);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 					}
 				}
+				
+				//((PlayGameData) arg0).setCards(discardPile);
 			}
 			else {
 				prevCard = ((PlayGameData) arg0).getPlayedCard();

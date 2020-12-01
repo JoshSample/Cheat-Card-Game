@@ -110,7 +110,7 @@ public class PlayGameControl implements ActionListener {
 	    //Select Card to be played
 	    else if (command == "Select")
 	    {
-	    	PlayGameData data = new PlayGameData(turn, false, deck.get(currentCard%deck.size()), playerCount);
+	    	PlayGameData data = new PlayGameData(turn, false, deck.get(currentCard%deck.size()), deck.size());
 	    	try {
 		    	cheatClient.sendToServer(data);
 		    	} catch(IOException e1) {

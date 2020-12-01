@@ -10,6 +10,8 @@ public class PlayGameData implements Serializable {
 	private int opponentCount;
 	private boolean turn;
 	private boolean cheat;
+	private int cheatCheck = 0;
+	private int pileSize;
 	private ArrayList<String> cards = new ArrayList<String>();
 	private String playedCard;
 	
@@ -28,6 +30,12 @@ public class PlayGameData implements Serializable {
 	public boolean getTurn() {
 		return turn;
 	}
+	public void setCheatCheck(int cheatCheck) {
+		this.cheatCheck = cheatCheck;
+	}
+	public int getCheatCheck() {
+		return cheatCheck;
+	}
 	public void setCheat(boolean val) {
 		this.cheat = val;
 	}
@@ -39,7 +47,12 @@ public class PlayGameData implements Serializable {
 	public void setPlayerCount(int count) {
 		this.playerCount = count;
 	}
-	
+	public void setPileSize(int size) {
+		pileSize = size;
+	}
+	public int getPileSize() {
+		return pileSize;
+	}
 	public void setOpponentCount(int count) {
 		this.opponentCount = count;
 	}
